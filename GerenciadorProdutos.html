@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Produtos</title>
+    <style>
+        .hidden{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="tabela">
+        <h2>Gerenciador de Produtos</h2>
+
+        <button onclick="cadastro()">Cadastrar Produtos</button>
+        <br><br>
+        <table border="1">
+        <tr>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Valor Total</th>
+            <th>Ações</th>
+        </tr>
+        <tbody id="corpo"></tbody>
+        </table>
+    </div>
+    <br><br>
+    <div id="formulario">
+        <h2>Gerenciador de Produtos</h2>
+        <h3>Cadastro de Produto</h3>
+
+        <form>
+            <label for="">Nome:<input type="text"></label>
+            <br><br>
+            <label for="">Preço:<input type="number"></label>
+            <br><br>
+            <label for="">Quantidade:<input type="number"></label>
+        </form> 
+        <br><br>
+        <button id="salvar" onclick="salvar()">Salvar</button>
+        <button id="cancelar" onclick="cancelar()">Cancelar</button>
+    </div>
+
+    <script>
+        let nome = []
+        let quantidade = []
+        let preco = []
+        let valorTotal = []
+        
+        let corpo = document.getElementById("corpo")
+
+        for(let i = 0; i < nome.length; i++){
+            let linha = document.createElement("tr")
+            linha.innerHTML = `
+                 <td>${nome[i]}</td>
+                 <td>${quantidade[i]}</td>
+                 <td>${preco[i]}</td>
+                 <td>${valorTotal[i]}</td>`
+
+                 corpo.appendChild(linha) 
+        }
+        function cadastro(){
+            document.getElementById("tabela").classList.add("hidden")
+            document.getElementById("cadastro").classList.add("hidden")
+            
+        }
+
+    </script>
+    
+
+</body>
+</html>
