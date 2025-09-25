@@ -1,0 +1,4 @@
+git clone linkrepositorio
+git add .
+git commit -m "comentario"
+git push
