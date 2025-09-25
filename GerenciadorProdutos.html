@@ -4,14 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Produtos</title>
-    <style>
-        .hidden{
-            display: none;
-        }
-    </style>
 </head>
 <body>
-    <div id="tabela">
+    <div id="tabela" style="display: block;">
+        
         <h2>Gerenciador de Produtos</h2>
 
         <button onclick="cadastro()">Cadastrar Produtos</button>
@@ -27,17 +23,17 @@
         <tbody id="corpo"></tbody>
         </table>
     </div>
-    <br><br>
-    <div id="formulario">
+    
+    <div id="formulario" style="display: none;">
         <h2>Gerenciador de Produtos</h2>
         <h3>Cadastro de Produto</h3>
 
         <form>
-            <label for="">Nome:<input type="text"></label>
+            <label for="nome" >Nome:<input type="text" placeholder="Digite o Nome" id="nome" required></label>
             <br><br>
-            <label for="">Preço:<input type="number"></label>
+            <label for="preco" >Preço:<input type="number" id="preco" placeholder="Digite o Preço" required></label>
             <br><br>
-            <label for="">Quantidade:<input type="number"></label>
+            <label for="quantidade" >Quantidade:<input type="number" id="quantidade" placeholder="Digite a Quantidade" required></label>
         </form> 
         <br><br>
         <button id="salvar" onclick="salvar()">Salvar</button>
@@ -45,26 +41,61 @@
     </div>
 
     <script>
+        //arrays para armazenamento
         let nome = []
-        let quantidade = []
         let preco = []
+        let quantidade = []
         let valorTotal = []
         
-        let corpo = document.getElementById("corpo")
-
-        for(let i = 0; i < nome.length; i++){
-            let linha = document.createElement("tr")
-            linha.innerHTML = `
-                 <td>${nome[i]}</td>
-                 <td>${quantidade[i]}</td>
-                 <td>${preco[i]}</td>
-                 <td>${valorTotal[i]}</td>`
-
-                 corpo.appendChild(linha) 
+        //funcoes 
+        function cadastro(){ //cadastro
+            document.getElementById("formulario").style.display = "block";
+            document.getElementById("tabela").style.display = "none"
         }
-        function cadastro(){
-            document.getElementById("tabela").classList.add("hidden")
-            document.getElementById("cadastro").classList.add("hidden")
+        function salvar(){ //salva
+            // 1. Pegar os valores dos inputs
+            let valorNome = document.getElementById("nome").value;
+            let valorPreco = document.getElementById("preco").value;
+            let valorQuantidade = document.getElementById("quantidade").value;
+            
+            // 2. Converter para número e calcular o valor total
+            let precoNumerico = parseFloat(valorPreco);
+            let quantidadeNumerica = parseInt(valorQuantidade);
+            let valorTotalCalculado = precoNumerico * quantidadeNumerica;
+
+            // 3. Adicionar os dados aos arrays
+            nome.push(valorNome);
+            quantidade.push(quantidadeNumerica);
+            preco.push(precoNumerico);
+            valorTotal.push(valorTotalCalculado);
+
+            // 4. Criar a nova linha na tabela
+            let novaLinha = document.createElement("tr");
+            let ultimoIndex = nome.length - 1;
+            
+            novaLinha.innerHTML = `
+                <td>${nome[ultimoIndex]}</td>
+                <td>${preco[ultimoIndex]}</td>
+                <td>${quantidade[ultimoIndex]}</td>
+                <td>${valorTotal[ultimoIndex]}</td>
+                <td><button id="excluir" onclick="excluir()">Excluir</button></td>
+            `;
+            corpo.appendChild(novaLinha);
+
+            // limpa o formulario 
+            document.getElementById("nome").value = ""
+            document.getElementById("preco").value = ""
+            document.getElementById("quantidade").value = ""
+
+            // salvar e ir para a tabela
+            document.getElementById("formulario").style.display = "none";
+            document.getElementById("tabela").style.display = "block"
+        }
+        function cancelar(){ //cancela e volta a tabela
+            document.getElementById("formulario").style.display = "none"
+            document.getElementById("tabela").style.display = "block"
+        }
+        function excluir(indice){
             
         }
 
